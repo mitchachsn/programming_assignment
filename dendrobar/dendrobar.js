@@ -3,6 +3,14 @@ class dendrobar {
         this.data = data
 
     }
+
+    stratify(){
+        
+        stratify = d3.stratify()            // This D3 API method gives cvs file flat data array dimensions.
+        .parentId(function(d) { return d.id.substring(0, d.id.lastIndexOf(".")); });
+
+    }
+
     row(d) {
         return {
         id: d.id,
@@ -10,6 +18,26 @@ class dendrobar {
         color: d.color
         };
         }
+
+    draw() {
+        
+        root = stratify(this.data);
+        tree(root)
+
+        // Draw every datum a line connecting to its parent.
+        link = g.selectAll(".link")
+        .data(root.descendants().slice(1))
+        .enter().append("path")
+        .attr("class", "link")
+        .attr("d", function(d) {
+            return "M" + d.y + "," + d.x
+                    + "C" + (d.parent.y + 100) + "," + d.x
+                    + " " + (d.parent.y + 100) + "," + d.parent.x
+                    + " " + d.parent.y + "," + d.parent.x;
+        });
+    }
+    
+    
 }
 
 
@@ -41,15 +69,6 @@ var tree = d3.cluster()                 // This D3 API method setup the Dendrogr
     || a.parent.parent == b.parent
     || a.parent == b.parent.parent ? 0.4 : 0.8;
 });
-
-var stratify = d3.stratify()            // This D3 API method gives cvs file flat data array dimensions.
-.parentId(function(d) { return d.id.substring(0, d.id.lastIndexOf(".")); });
-
-d3.csv("skillsdata.csv", row, function(error, data) {
-if (error) throw error;
-
-var root = stratify(data);
-tree(root);
 
 // Draw every datum a line connecting to its parent.
 var link = g.selectAll(".link")
@@ -178,5 +197,5 @@ leafG.select("rect")
         .attr("stroke-width","0");
 }
 
-});
+;
 
