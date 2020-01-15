@@ -21,6 +21,20 @@ class dendrobar {
 
     draw() {
 
+        // x-scale and x-axis
+        experienceName = ["", " 1.0"," 2.0"," 3.0"," 4.0"," 5.0"];
+        formatSkillPoints = function (d) {
+        return experienceName[d % 6];
+        }
+        xScale =  d3.scaleLinear()
+        .domain([0,5])
+        .range([0, 400]);
+
+        xAxis = d3.axisTop()
+        .scale(xScale)
+        .ticks(5)
+        .tickFormat(formatSkillPoints);
+
         // Setting up a way to handle the data
         tree = d3.cluster()                 // This D3 API method setup the Dendrogram datum position.
         .size([height, width - 460])    // Total width - bar chart width = Dendrogram chart width
@@ -44,44 +58,28 @@ class dendrobar {
                     + " " + (d.parent.y + 100) + "," + d.parent.x
                     + " " + d.parent.y + "," + d.parent.x;
         });
+
+        // main svg
+        var svg = d3.select("svg"),
+        width = +svg.attr("width"),
+        height = +svg.attr("height"),
+        g = svg.append("g").attr("transform", "translate(20,0)");       // move right 20px.
+
+        // Draw every datum a line connecting to its parent.
+        var link = g.selectAll(".link")
+            .data(root.descendants().slice(1))
+            .enter().append("path")
+            .attr("class", "link")
+            .attr("d", function(d) {
+                return "M" + d.y + "," + d.x
+                        + "C" + (d.parent.y + 100) + "," + d.x
+                        + " " + (d.parent.y + 100) + "," + d.parent.x
+                        + " " + d.parent.y + "," + d.parent.x;
+        });
     }
     
     
 }
-
-
-// main svg
-var svg = d3.select("svg"),
-width = +svg.attr("width"),
-height = +svg.attr("height"),
-g = svg.append("g").attr("transform", "translate(20,0)");       // move right 20px.
-
-// x-scale and x-axis
-var experienceName = ["", " 1.0"," 2.0"," 3.0"," 4.0"," 5.0"];
-var formatSkillPoints = function (d) {
-return experienceName[d % 6];
-}
-var xScale =  d3.scaleLinear()
-.domain([0,5])
-.range([0, 400]);
-
-var xAxis = d3.axisTop()
-.scale(xScale)
-.ticks(5)
-.tickFormat(formatSkillPoints);
-
-// Draw every datum a line connecting to its parent.
-var link = g.selectAll(".link")
-    .data(root.descendants().slice(1))
-    .enter().append("path")
-    .attr("class", "link")
-    .attr("d", function(d) {
-        return "M" + d.y + "," + d.x
-                + "C" + (d.parent.y + 100) + "," + d.x
-                + " " + (d.parent.y + 100) + "," + d.parent.x
-                + " " + d.parent.y + "," + d.parent.x;
-    });
-
 // Setup position for every datum; Applying different css classes to parents and leafs.
 var node = g.selectAll(".node")
     .data(root.descendants())
