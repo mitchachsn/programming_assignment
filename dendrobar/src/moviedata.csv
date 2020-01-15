@@ -1,0 +1,32 @@
+id,value,color
+movies,
+movies.Cartoon,
+movies.Cartoon.Shrek,3.8,#808080
+movies.Cartoon.Shrek 2,4.0,#2E2575
+movies.Cartoon.Shrek 3,3.5,#E54F24
+movies.Cartoon.Shrek 4,3.5,#FF9900
+movies.Cartoon.Flush Away,3,#563B7E
+movies.Cartoon.Disney,
+movies.Cartoon.Disney.Beauty and the Beast,3,#D6BA33
+movies.Cartoon.Disney.Cinderella,3,#1169AE
+movies.Cartoon.Disney.Pochahantas,2.5,#F6854D
+movies.Action,
+movies.Action.PHP,1.5,#617CBE
+movies.Action.C++,1,#0073AD
+movies.Action.SQL,1.5,#E58E00
+movies.Action.Transformers,
+movies.Action.Transformers.1,3.5,#EB2C2F
+movies.Action.Transformers.Revenge of the Fallen,3,#EB2C2F
+movies.Action.Transformers.Dark of the Moon,3.1,#59666C
+movies.Action.Transformers.Age of Extinction,2.8,#6DB33F
+movies.Action.Transformers.The Last Knight,2.6,#6DB33F
+movies.Action.Transformers.Bumblebee,3.4,#5FA134
+movies.Databases,
+movies.Databases.MySQL,2.5,#00618A
+movies.SysAdmin,
+movies.SysAdmin.VPS & SharedHost,2,#808080
+movies.SysAdmin.Linux,2.5,#040404
+movies.SysAdmin.Apache & moviescat,2,#CA212F
+movies.CMS,
+movies.CMS.Wordpress,1.5,#00A0D2
+movies.CMS.Drupal,1.5,#0678BE
