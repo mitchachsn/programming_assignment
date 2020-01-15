@@ -20,6 +20,15 @@ class dendrobar {
         }
 
     draw() {
+
+        // Setting up a way to handle the data
+        tree = d3.cluster()                 // This D3 API method setup the Dendrogram datum position.
+        .size([height, width - 460])    // Total width - bar chart width = Dendrogram chart width
+        .separation(function separate(a, b) {
+            return a.parent == b.parent            // 2 levels tree grouping for category
+            || a.parent.parent == b.parent
+            || a.parent == b.parent.parent ? 0.4 : 0.8;
+        });
         
         root = stratify(this.data);
         tree(root)
@@ -60,15 +69,6 @@ var xAxis = d3.axisTop()
 .scale(xScale)
 .ticks(5)
 .tickFormat(formatSkillPoints);
-
-// Setting up a way to handle the data
-var tree = d3.cluster()                 // This D3 API method setup the Dendrogram datum position.
-.size([height, width - 460])    // Total width - bar chart width = Dendrogram chart width
-.separation(function separate(a, b) {
-    return a.parent == b.parent            // 2 levels tree grouping for category
-    || a.parent.parent == b.parent
-    || a.parent == b.parent.parent ? 0.4 : 0.8;
-});
 
 // Draw every datum a line connecting to its parent.
 var link = g.selectAll(".link")

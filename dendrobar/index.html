@@ -13,7 +13,8 @@
 
 <script>
     
-    var data = d3.csv("skillsdata.csv", function(data){
+    var data = d3.csv("https://raw.githubusercontent.com/mitchachsn/programming_assignment/master/dendrobar/skillsdata.csv",this.row, function(error, data){
+        if (error) throw error;
 
     })
     var vis = new dendrobar(data);
